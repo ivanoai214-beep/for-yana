@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#fff9fc">
+  <meta name="description" content="Небольшая история для Яны от Савелия.">
+  <title>Для Яны — от Савелия ♡</title>
+  <style>
+    :root {
+      --bg: #fff9fc;
+      --paper: #ffffff;
+      --ink: #51414a;
+      --muted: #927e89;
+      --rose: #c97996;
+      --rose-dark: #a95f7c;
+      --blush: #f8e8ef;
+      --line: #f0dfe7;
+      --shadow: 0 24px 75px rgba(119, 75, 96, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0; color: var(--ink);
+      background:
+        radial-gradient(ellipse at 8% 8%, rgba(249,224,235,.65), transparent 34rem),
+        radial-gradient(ellipse at 94% 45%, rgba(251,235,242,.72), transparent 36rem),
+        var(--bg);
+      font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      overflow-x: hidden;
+    }
+    body.locked { overflow: hidden; }
+    a { color: inherit; }
+    .ambient, .sparkles { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .ambient span {
+      position: absolute; color: rgba(201,121,150,.25);
+      animation: floatUp linear forwards; user-select: none;
+    }
+    @keyframes floatUp {
+      from { transform: translate3d(0, 110vh, 0) rotate(-15deg); opacity: 0; }
+      12% { opacity: .75; }
+      85% { opacity: .55; }
+      to { transform: translate3d(35px, -15vh, 0) rotate(35deg); opacity: 0; }
+    }
+    .sparkles i {
+      position: absolute; width: 3px; height: 3px; border-radius: 50%;
+      background: #d99bb1; opacity: .35; animation: twinkle 3s ease-in-out infinite;
+    }
+    @keyframes twinkle { 50% { opacity: .08; transform: scale(.5); } }
+
+    /* Небольшая заставка при открытии */
+    .intro {
+      position: fixed; inset: 0; z-index: 20; display: grid; place-items: center;
+      background: #fff9fc; transition: opacity 1s ease, visibility 1s ease;
+    }
+    .intro.hide { opacity: 0; visibility: hidden; }
+    .intro-inner { text-align: center; animation: introIn 1.2s ease both; }
+    .intro-heart { color: var(--rose); font-size: 42px; animation: heartbeat 1.3s ease-in-out infinite; }
+    .intro-text { margin-top: 12px; color: var(--muted); font-size: 14px; letter-spacing: .12em; }
+    @keyframes introIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes heartbeat { 50% { transform: scale(1.18); } }
+
+    main, footer { position: relative; z-index: 1; }
+    .hero {
+      min-height: 100svh; display: grid; place-items: center; text-align: center;
+      padding: 80px 22px 60px; position: relative;
+    }
+    .hero-inner { width: min(100%, 760px); animation: heroIn 1.5s .2s both; }
+    @keyframes heroIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    .overline {
+      color: var(--rose); text-transform: uppercase; letter-spacing: .27em;
+      font: 10px/1.8 Arial, sans-serif;
+    }
+    h1 {
+      margin: 24px 0 15px; color: #5b4650; font-weight: 400;
+      font-size: clamp(76px, 16vw, 142px); line-height: .95; letter-spacing: -.055em;
+      text-shadow: 0 10px 40px rgba(201,121,150,.12);
+    }
+    .hero-subtitle { color: var(--muted); font-size: clamp(17px, 3vw, 21px); line-height: 1.9; }
+    .hero-date { margin-top: 30px; color: #b18c9c; font: 10px Arial,sans-serif; letter-spacing: .2em; }
+    .down {
+      display: inline-block; margin-top: 54px; padding: 10px 14px;
+      color: var(--rose-dark); text-decoration: none;
+      font: 10px Arial,sans-serif; letter-spacing: .2em; text-transform: uppercase;
+    }
+    .down span { display: block; margin-top: 10px; font-size: 20px; animation: bob 1.8s ease-in-out infinite; }
+    @keyframes bob { 50% { transform: translateY(6px); } }
+
+    section { padding: 96px 22px; }
+    .wrap { max-width: 870px; margin: 0 auto; }
+    .section-label {
+      color: var(--rose); text-align: center; text-transform: uppercase;
+      letter-spacing: .24em; font: 10px Arial,sans-serif; line-height: 1.8;
+    }
+    h2 { margin: 15px 0 36px; text-align: center; color: #5b4650; font-size: clamp(36px, 7vw, 55px); font-weight: 400; }
+    .title-heart { color: var(--rose); font-size: .65em; vertical-align: middle; }
+
+    /* ФОТО: смотри инструкцию прямо над img ниже */
+    .photo-shell {
+      max-width: 650px; margin: 0 auto; padding: 13px;
+      border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.9);
+      box-shadow: var(--shadow); position: relative;
+      transition: transform .6s ease, box-shadow .6s ease;
+    }
+    .photo-shell:hover { transform: translateY(-5px); box-shadow: 0 30px 85px rgba(119,75,96,.15); }
+    .photo-shell::before, .photo-shell::after {
+      content: "✧"; position: absolute; color: #d99bb1; font-size: 25px; z-index: 2;
+    }
+    .photo-shell::before { top: -14px; left: 20px; }
+    .photo-shell::after { bottom: -14px; right: 20px; }
+    .photo-shell img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 4px; }
+    .photo-placeholder {
+      display: none; aspect-ratio: 4/3; place-items: center; text-align: center;
+      padding: 25px; color: #a77b8d; background: linear-gradient(145deg,#fff8fb,#f7e8ef);
+    }
+    .photo-placeholder .symbol { font-size: 48px; color: var(--rose); }
+    .photo-placeholder p { margin: 12px 0 6px; font-size: 19px; }
+    .photo-placeholder small { font: 11px/1.7 Arial,sans-serif; color: #a88d99; }
+    .caption { margin: 20px 0 0; color: var(--muted); text-align: center; font-style: italic; line-height: 1.7; }
+
+
+    .solo-photo { position: relative; }
+    .solo-photo .photo-shell { max-width: 430px; }
+    .solo-photo .photo-shell img,
+    .solo-photo .photo-placeholder { aspect-ratio: 4 / 5; }
+\n    .letter {
+      max-width: 750px; margin: 0 auto; padding: clamp(28px, 6vw, 60px);
+      border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.88);
+      box-shadow: var(--shadow); color: #65525c;
+      font-size: clamp(17px, 2.6vw, 20px); line-height: 2;
+      position: relative;
+    }
+    .letter::before {
+      content: "“"; position: absolute; top: -23px; left: 24px;
+      color: #edcbd8; font-size: 86px; line-height: 1;
+    }
+    .letter p { margin: 0 0 19px; }
+    .letter .sign { margin: 30px 0 0; text-align: right; color: var(--rose-dark); font-style: italic; }
+
+    .poem {
+      max-width: 650px; margin: 0 auto; text-align: center; color: #725d67;
+      font-size: clamp(18px, 3vw, 22px); font-style: italic; line-height: 2.1;
+    }
+    .poem .ornament { margin-top: 23px; color: var(--rose); font-style: normal; font-size: 24px; }
+
+    .ending { padding: 110px 22px 125px; text-align: center; }
+    .ending h2 { margin-bottom: 22px; }
+    .ending p { color: var(--muted); font-size: 18px; line-height: 1.9; }
+    .ending .heart { display: inline-block; margin-top: 17px; color: var(--rose); font-size: 38px; animation: heartbeat 2s ease-in-out infinite; }
+    .final-line { color: #bd8198 !important; font-style: italic; }
+
+    /* Появление блоков при прокрутке */
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: .12s; }
+    .reveal.delay-2 { transition-delay: .24s; }
+
+    footer { padding: 0 20px max(35px, env(safe-area-inset-bottom)); color: #b39da7; text-align: center; font: 9px Arial,sans-serif; letter-spacing: .18em; }
+
+
+    /* Маленький секретный сюрприз */
+    .secret-note { max-width: 680px; margin: 0 auto; text-align: center; }
+    .secret-card {
+      border: 1px solid var(--line); border-radius: 24px; padding: 30px 24px;
+      background: rgba(255,255,255,.78); box-shadow: var(--shadow);
+    }
+    .secret-envelope { font-size: 48px; margin-bottom: 12px; }
+    .secret-button {
+      border: 0; border-radius: 999px; padding: 14px 24px; min-height: 48px;
+      background: var(--rose); color: white; font: 16px Georgia,serif;
+      cursor: pointer; box-shadow: 0 8px 22px rgba(169,95,124,.2);
+      transition: transform .2s ease, background .2s ease;
+    }
+    .secret-button:hover { transform: translateY(-2px); background: var(--rose-dark); }
+    .secret-button:focus-visible { outline: 3px solid #dca8bb; outline-offset: 4px; }
+    .secret-message {
+      display: none; margin: 22px auto 0; max-width: 490px; color: #765d68;
+      font-size: 18px; line-height: 1.9; animation: fadeIn .65s ease both;
+    }
+    .secret-message.open { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 600px) {
+      body { -webkit-text-size-adjust: 100%; }
+      .hero { min-height: 94svh; min-height: 94dvh; padding: max(58px,env(safe-area-inset-top)) 20px 48px; }
+      h1 { font-size: clamp(68px,22vw,104px); margin: 20px 0 14px; }
+      .overline { font-size: 9px; letter-spacing: .2em; }
+      .hero-subtitle { font-size: 17px; line-height: 1.75; }
+      .hero-date { font-size: 9px; letter-spacing: .13em; }
+      .down { margin-top: 40px; }
+      section { padding: 68px 18px; }
+      h2 { margin: 12px 0 27px; font-size: clamp(33px,10vw,44px); }
+      .section-label { font-size: 9px; letter-spacing: .17em; }
+      .photo-shell { padding: 8px; }
+      .photo-shell img, .photo-placeholder { aspect-ratio: 4/5; width: 100%; object-fit: cover; }\n      .secret-card { padding: 25px 18px; border-radius: 20px; }\n      .secret-message { font-size: 16px; line-height: 1.8; }\n      .secret-button { width: 100%; max-width: 320px; }
+      .caption { font-size: 15px; }
+      .letter { padding: 27px 21px; font-size: 17px; line-height: 1.85; }
+      .letter p { margin-bottom: 16px; }
+      .letter .sign { margin-top: 24px; }
+      .poem { font-size: 18px; line-height: 2; }
+      .ending { padding: 78px 20px 90px; }
+      .ending p { font-size: 16px; }
+      footer { font-size: 8px; letter-spacing: .12em; }
+    }
+    @media (max-width: 360px) {
+      .hero-subtitle { font-size: 15px; }
+      .hero-date { letter-spacing: .08em; }
+      section { padding-left: 14px; padding-right: 14px; }\n      .secret-card { padding: 22px 15px; }
+      .letter { padding: 23px 17px; font-size: 16px; }
+      .poem { font-size: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body class="locked">
+  <div class="intro" id="intro" aria-label="Открывается маленькая история">
+    <div class="intro-inner">
+      <div class="intro-heart">♡</div>
+      <div class="intro-text">для Яны, с теплом</div>
+    </div>
+  </div>
+
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
+  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
+  <main>
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="overline">маленькая история о нас</div>
+        <h1>Яна</h1>
+        <div class="hero-subtitle">Самое красивое иногда начинается<br>с одного простого «да».</div>
+        <div class="hero-date">17 · 11 · 2026 &nbsp; — &nbsp; НАШЕ НАЧАЛО</div>
+        <a class="down" href="#photo">Немного ниже <span>↓</span></a>
+      </div>
+    </header>
+
+    <section id="photo">
+      <div class="wrap">
+        <div class="section-label reveal">одно прекрасное воспоминание</div>
+        <h2 class="reveal delay-1">Мы <span class="title-heart">♡</span></h2>
+        <div class="photo-shell reveal delay-2">
+          <!--
+            КАК ВСТАВИТЬ ВАШЕ ФОТО:
+            1. Положи фотографию в ту же папку, где находится index.html.
+            2. Назови файл exactly: our-photo.jpg
+            3. Больше ничего менять не нужно — фото появится здесь автоматически.
+
+            Если у фотографии другое имя или формат, замени значение src ниже.
+            Например: src="photo.png"
+          -->
+          <img
+            src="our-photo.jpg"
+            alt="Совместная фотография Савелия и Яны"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+          >
+          <div class="photo-placeholder">
+            <div>
+              <div class="symbol">♡</div>
+              <p>Здесь будет наша фотография</p>
+              <small>Положи файл our-photo.jpg рядом с index.html</small>
+            </div>
+          </div>
+        </div>
+        <p class="caption reveal">И пусть таких счастливых мгновений у нас будет ещё очень много.</p>
+
+        <div class="solo-photo reveal" style="margin:76px auto 0; max-width:430px;">
+          <div class="section-label">а здесь — просто ты</div>
+          <h2 style="margin-bottom:25px;">Твоя улыбка <span class="title-heart">♡</span></h2>
+          <div class="photo-shell">
+            <!--
+              ОТДЕЛЬНОЕ ФОТО ЯНЫ:
+              Положи её фотографию рядом с index.html и назови yana-photo.jpg.
+              Если у файла другое имя или формат, измени src ниже.
+            -->
+            <img
+              src="yana-photo.jpg"
+              alt="Фотография Яны"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+            >
+            <div class="photo-placeholder">
+              <div>
+                <div class="symbol">♡</div>
+                <p>Здесь будет твоя фотография</p>
+                <small>Добавь файл yana-photo.jpg рядом с index.html</small>
+              </div>
+            </div>
+          </div>
+          <p class="caption">Потому что ты заслуживаешь отдельную страницу в этой истории.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="letter">
+      <div class="wrap">
+        <div class="section-label reveal">от всего сердца</div>
+        <h2 class="reveal delay-1">Письмо для тебя</h2>
+        <article class="letter reveal delay-2">
+          <p>Яна, я просто безумно счастлив, что теперь мы вместе. ❤️</p>
+          <p>Ты даже не представляешь, сколько радости мне принесло твоё согласие. Я хочу дарить тебе улыбки, заботу и как можно больше счастливых моментов.</p>
+          <p>Надеюсь, у нас всё будет прекрасно. Я очень рад, что теперь ты моя девушка. ❤️</p>
+          <p class="sign">Твой Савелий</p>
+        </article>
+      </div>
+    </section>
+
+
+    <section id="secret">
+      <div class="wrap secret-note reveal">
+        <div class="section-label">маленький сюрприз</div>
+        <h2>Для тебя есть кое-что ещё <span class="title-heart">♡</span></h2>
+        <div class="secret-card">
+          <div class="secret-envelope" aria-hidden="true">💌</div>
+          <p>Я оставил для тебя ещё несколько слов...</p>
+          <button class="secret-button" id="secretButton" type="button"
+                  aria-expanded="false" aria-controls="secretMessage">
+            Открыть моё послание
+          </button>
+          <div class="secret-message" id="secretMessage" aria-live="polite">
+            Яна, если ты читаешь это, значит, я смог подарить тебе ещё одну улыбку.
+            Мне не нужен особенный повод, чтобы напомнить, как я рад, что ты есть в моей жизни.
+            Я не обещаю быть идеальным, но обещаю стараться, слушать тебя, поддерживать
+            и ценить наши маленькие моменты. Пусть у нас будет много поводов смеяться,
+            мечтать и создавать воспоминания. Ты очень дорога мне. ❤️
+            <div class="sign" style="margin-top:18px;">Твой Савелий</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="poem">
+      <div class="wrap">
+        <div class="section-label reveal">несколько строк для тебя</div>
+        <h2 class="reveal delay-1">Пусть впереди</h2>
+        <div class="poem reveal delay-2">
+          Пусть каждый день приносит свет,<br>
+          Пусть будет больше добрых встреч.<br>
+          Пусть много радостных моментов<br>
+          Нам удаётся уберечь.<br><br>
+          И пусть без лишних обещаний<br>
+          Всё будет искренне у нас.<br>
+          Ведь так прекрасно — просто знать,<br>
+          Что начинается «про нас».
+          <div class="ornament">♡</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ending">
+      <div class="section-label reveal">это только начало</div>
+      <h2 class="reveal delay-1">Наша история</h2>
+      <p class="reveal delay-2">Впереди ещё столько всего,<br>что нам предстоит пережить вместе.<br>И я очень хочу, чтобы это было прекрасно.</p>
+      <div class="heart reveal">♥</div>
+      <p class="final-line reveal">Спасибо, что сказала «да», Яна.</p>
+      <p class="reveal" style="font-size:15px;color:#a88d99;">С любовью, Савелий</p>
+    </section>
+  </main>
+
+  <footer>СДЕЛАНО С ТЕПЛОМ · 17 НОЯБРЯ 2026</footer>
+
+  <script>
+    // Заставка плавно исчезает после загрузки страницы
+    const intro = document.getElementById('intro');
+    function closeIntro() {
+      intro.classList.add('hide');
+      document.body.classList.remove('locked');
+    }
+    window.addEventListener('load', () => setTimeout(closeIntro, 1100));
+    // На случай, если событие load уже произошло
+    if (document.readyState === 'complete') setTimeout(closeIntro, 1100);
+
+
+    // Открытие личного послания
+    const secretButton = document.getElementById('secretButton');
+    const secretMessage = document.getElementById('secretMessage');
+    secretButton.addEventListener('click', () => {
+      const isOpen = secretMessage.classList.toggle('open');
+      secretButton.setAttribute('aria-expanded', String(isOpen));
+      secretButton.textContent = isOpen ? 'Закрыть послание' : 'Открыть моё послание';
+    });
+
+    // Появление секций мягко, по мере прокрутки
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14, rootMargin: '0px 0px -35px 0px' });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('visible'));
+    }
+
+    // Лёгкие парящие сердечки и звёздочки
+    const ambient = document.getElementById('ambient');
+    const sparkles = document.getElementById('sparkles');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reduceMotion) {
+      function addHeart() {
+        const item = document.createElement('span');
+        item.textContent = Math.random() > .45 ? '♡' : '✧';
+        item.style.left = Math.random() * 100 + '%';
+        item.style.fontSize = (12 + Math.random() * 14) + 'px';
+        const duration = 13 + Math.random() * 10;
+        item.style.animationDuration = duration + 's';
+        ambient.appendChild(item);
+        setTimeout(() => item.remove(), duration * 1000);
+      }
+      setInterval(addHeart, 1450);
+
+      for (let i = 0; i < 38; i++) {
+        const dot = document.createElement('i');
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.top = Math.random() * 100 + '%';
+        dot.style.animationDelay = Math.random() * 4 + 's';
+        sparkles.appendChild(dot);
+      }
+    }
+  </script>
+</body>
+</html>
